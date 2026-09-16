@@ -1,0 +1,58 @@
+{
+  "plots": 9,
+  "images": [
+    {
+      "name": "openmeteo_vs_sensor_3days.png",
+      "width": 1700,
+      "height": 1530
+    },
+    {
+      "name": "actual_vs_predicted.png",
+      "width": 1870,
+      "height": 765
+    },
+    {
+      "name": "batch_learning_rates.png",
+      "width": 1496,
+      "height": 799
+    },
+    {
+      "name": "sgd_learning_rates.png",
+      "width": 1496,
+      "height": 799
+    },
+    {
+      "name": "residuals_vs_hour.png",
+      "width": 1530,
+      "height": 782
+    },
+    {
+      "name": "plot1_ac_vs_irradiation.png",
+      "width": 1445,
+      "height": 850
+    },
+    {
+      "name": "plot2_moduletemp_vs_ambienttemp.png",
+      "width": 1445,
+      "height": 850
+    },
+    {
+      "name": "plot3_ac_vs_dc.png",
+      "width": 1445,
+      "height": 850
+    },
+    {
+      "name": "plot4_avg_power_by_hour.png",
+      "width": 1445,
+      "height": 850
+    }
+  ],
+  "full_size_links": "passed",
+  "png_download": "passed",
+  "offline_file_images": "all nine passed",
+  "keyboard_three_tab_navigation": "passed",
+  "mobile_horizontal_overflow": false,
+  "daytime_rmse_a_kw": 704.46,
+  "daytime_rmse_b_kw": 3409.5,
+  "page_errors": []
+}

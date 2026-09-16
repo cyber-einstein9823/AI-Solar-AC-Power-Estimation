@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore solar plant power with a NumPy regression model and a weather-responsive sky.">
+  <title>Solar Lab · Weather into watts</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%23f9d38c'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="model-data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-phase="day" data-weather="clear">
+  <div class="atmosphere" aria-hidden="true">
+    <div class="sky-wash"></div><div class="sun-glow"></div><div class="sun"></div>
+    <div class="moon"></div><div class="stars" id="stars"></div>
+    <div class="cloud cloud-a"></div><div class="cloud cloud-b"></div><div class="cloud cloud-c"></div>
+    <div class="horizon"></div><div class="grain"></div>
+  </div>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Solar Lab home"><span class="brand-mark">✳</span> SOLAR<span class="brand-light">/ LAB</span></a>
+      <div class="header-actions"><span class="local-badge"><i></i> LOCAL MODEL</span><button id="motion-toggle" class="icon-button" type="button" aria-pressed="false" title="Pause background animation">Pause motion</button></div>
+    </header>
+    <main>
+      <section class="intro">
+        <div><p class="eyebrow">A LITTLE WEATHER. A LOT OF POSSIBILITY.</p><h1>Weather into <em>watts.</em></h1><p class="intro-copy">Change the sky. Explore the output.<br>A small window into the science of solar power.</p></div>
+        <div class="scene-reading"><span id="scene-symbol" aria-hidden="true">☀</span><div><p id="scene-label">Clear afternoon</p><span id="scene-time">13:00 IST</span></div></div>
+      </section>
+      <nav class="tabs" aria-label="Dashboard views" role="tablist">
+        <button role="tab" id="explorer-tab" aria-controls="explorer-panel" aria-selected="true" tabindex="0">Power explorer <span>↗</span></button>
+        <button role="tab" id="evidence-tab" aria-controls="evidence-panel" aria-selected="false" tabindex="-1">Behind the model</button>
+        <button role="tab" id="plots-tab" aria-controls="plots-panel" aria-selected="false" tabindex="-1">Plots &amp; diagnostics</button>
+      </nav>
+      <section id="explorer-panel" role="tabpanel" aria-labelledby="explorer-tab">
+        <div class="dashboard-grid">
+          <section class="panel controls-panel" aria-labelledby="conditions-title">
+            <div class="panel-heading"><div><p class="eyebrow">01 / YOUR SCENARIO</p><h2 id="conditions-title">Set the conditions</h2></div><span class="small-sun" aria-hidden="true">☼</span></div>
+            <div class="presets" aria-label="Weather presets"><button data-preset="sunny" class="active" aria-pressed="true">☀ Sunny</button><button data-preset="cloudy" aria-pressed="false">☁ Cloudy</button><button data-preset="sunset" aria-pressed="false">◒ Sunset</button><button data-preset="night" aria-pressed="false">☾ Night</button></div>
+            <p class="control-hint">Drag a slider or type a value. Both stay in sync.</p>
+            <div class="control" data-field="hour">
+              <div class="control-top"><label for="hour-number"><span class="field-icon">◷</span> Time of day</label><div class="number-wrap"><input id="hour-number" type="number" min="0" max="23" step="1" value="13" inputmode="numeric"><span>h</span></div></div>
+              <input id="hour-slider" type="range" min="0" max="23" step="1" value="13" aria-label="Time of day slider">
+              <div class="range-labels"><span>00:00</span><button id="current-hour" type="button">Use current IST hour ↗</button><span>23:00</span></div>
+            </div>
+            <div class="control" data-field="sw_radiation">
+              <div class="control-top"><label for="sw_radiation-number"><span class="field-icon">☀</span> Solar radiation</label><div class="number-wrap"><input id="sw_radiation-number" type="number" min="0" max="1500" step="1" value="950" inputmode="decimal"><span>W/m²</span></div></div>
+              <input id="sw_radiation-slider" type="range" min="0" max="1500" step="1" value="950" aria-label="Solar radiation slider">
+              <div class="range-labels"><span>0</span><span>1,500 W/m²</span></div>
+            </div>
+            <div class="control" data-field="temp_2m">
+              <div class="control-top"><label for="temp_2m-number"><span class="field-icon">°</span> Air temperature</label><div class="number-wrap"><input id="temp_2m-number" type="number" min="-20" max="60" step="0.1" value="35" inputmode="decimal"><span>°C</span></div></div>
+              <input id="temp_2m-slider" type="range" min="-20" max="60" step="0.1" value="35" aria-label="Air temperature slider">
+              <div class="range-labels"><span>−20 °C</span><span>60 °C</span></div>
+            </div>
+            <div class="control" data-field="cloud_cover">
+              <div class="control-top"><label for="cloud_cover-number"><span class="field-icon">☁</span> Cloud cover</label><div class="number-wrap"><input id="cloud_cover-number" type="number" min="0" max="100" step="1" value="10" inputmode="decimal"><span>%</span></div></div>
+              <input id="cloud_cover-slider" type="range" min="0" max="100" step="1" value="10" aria-label="Cloud cover slider">
+              <div class="range-labels"><span>Clear sky</span><span>Overcast</span></div>
+            </div>
+            <p id="input-error" class="input-error" role="alert" hidden></p>
+            <p class="scene-note">The ambient scene follows your selected hour and cloud cover. It is an illustration, not live weather or a calculated sunrise.</p>
+          </section>
+          <div class="result-column">
+            <section class="panel output-panel" aria-labelledby="power-title">
+              <div class="panel-heading"><p class="eyebrow" id="power-title">02 / PREDICTED AC POWER</p><span class="model-pill"><i></i> MODEL READY</span></div>
+              <div class="power-reading" aria-live="polite" aria-atomic="true"><span id="power-value">—</span><span class="power-unit">kW</span></div>
+              <p class="power-description"><strong id="power-mw">— MW</strong><span class="dot-separator">·</span>plant-level hourly average</p>
+              <div class="output-divider"></div>
+              <div class="condition-summary"><div><span>SKY</span><strong id="summary-sky">Clear</strong></div><div><span>LOCAL TIME</span><strong id="summary-hour">13:00</strong></div><div><span>TEMPERATURE</span><strong id="summary-temp">35 °C</strong></div></div>
+              <p id="scenario-warning" class="scenario-warning" hidden></p>
+              <button id="download" class="download-button" type="button">Save this scenario <span>↓</span></button>
+            </section>
+            <section class="panel profile-panel" aria-labelledby="profile-title"><div class="chart-heading"><div><p class="eyebrow">THE PLANT'S DAILY RHYTHM</p><h2 id="profile-title">Following the sun</h2></div><span class="chart-key"><i></i> Observed mean</span></div><div id="profile-chart" class="profile-chart"></div><div class="chart-axis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div><p class="chart-note">Historical average AC power by hour, 15 May–17 June 2020. The marker follows your selected time; this curve does not simulate your weather.</p></section>
+            <div class="trust-strip"><span class="trust-icon">⌘</span><p><strong>Real weights. No retraining.</strong><br>NumPy linear regression · saved training-only scaler · runs locally</p><a href="#evidence" id="evidence-link" aria-label="View model evidence">↗</a></div>
+          </div>
+        </div>
+        <aside class="research-note"><span aria-hidden="true">ⓘ</span><p><strong>An experiment, with limits.</strong> Public-weather location and time alignment remain unresolved. This estimates one historical plant's aggregate output—not a live forecast or a rooftop system's production.</p></aside>
+      </section>
+      <section id="evidence-panel" role="tabpanel" aria-labelledby="evidence-tab" hidden>
+        <div class="panel evidence-panel"><p class="eyebrow">THE NUMBERS BEHIND THE SCENE</p><h2>Built on evidence, not the animation.</h2><p class="evidence-intro">Two feature sets. Three NumPy solvers. The same untouched test week.</p><div class="evidence-stats"><div><span>TRAINING</span><strong>27 days</strong><small>15 May–10 June · <span id="train-count">628</span> hours</small></div><div><span>TESTING</span><strong>7 days</strong><small>11–17 June · <span id="test-count">168</span> hours</small></div><div><span>PUBLIC WEATHER DAYTIME RMSE</span><strong id="public-rmse">—</strong><small>kW · normal equation</small></div></div>
+        <div class="table-scroll" tabindex="0" aria-label="Model error comparison"><table><caption>Held-out RMSE in kW · smaller is better</caption><thead><tr><th scope="col">Features</th><th scope="col">Solver</th><th scope="col">All hours</th><th scope="col">Daytime</th></tr></thead><tbody id="metrics-rows"></tbody></table></div>
+        <p class="chart-note">Daytime is measured on-site irradiation &gt; 0, identically for both sets. Negative predictions are clipped at zero. RMSE is not a percentage accuracy or a prediction interval.</p>
+        <h3>Held-out week</h3><div class="test-legend"><span class="legend-actual">● Actual</span><span class="legend-a">● On-site model A</span><span class="legend-b">● Public-weather model B</span></div><div id="test-chart"></div><div class="chart-axis"><span>11 Jun</span><span>13 Jun</span><span>15 Jun</span><span>17 Jun</span></div>
+        <details><summary>How your prediction is calculated</summary><p>Hour becomes sine and cosine of 2π × hour / 24. Public shortwave radiation, air temperature, cloud cover and the two hour features are standardized using saved training-only means and standard deviations. An intercept is added, then the saved Set B normal-equation coefficients produce kW. Only negative output is clipped. The animation never changes the model output.</p><p id="raw-prediction"></p></details>
+        <details><summary>What this experiment cannot establish</summary><p>One plant and 34 days cannot establish rooftop, seasonal or future-forecast performance. Coordinates are approximate; selected days have public-minus-sensor peak offsets of 0, +1 and +3 hours. Missing hours and incomplete inverter coverage are reported in the project. A fixed-rate SGD fit is not claimed to equal the exact least-squares solution.</p></details>
+        </div>
+      </section>
+      <section id="plots-panel" role="tabpanel" aria-labelledby="plots-tab" hidden>
+        <div class="panel plot-intro"><p class="eyebrow">THE COMPLETE EXPERIMENT</p><h2>Every plot, in one place.</h2><p class="evidence-intro">Original figures from the corrected pipeline. Select any plot to view it at full size.</p><div class="plot-score-grid"><div><span>ON-SITE SENSORS · DAYTIME RMSE</span><strong id="plot-rmse-a">—</strong></div><div><span>PUBLIC WEATHER · DAYTIME RMSE</span><strong id="plot-rmse-b">—</strong></div></div><p id="plot-comparison" class="chart-note"></p></div>
+        <h3 class="gallery-heading">Model diagnostics <span>05 FIGURES</span></h3>
+        <div class="plot-grid">
+          <figure class="plot-card"><a href="plots/openmeteo_vs_sensor_3days.png" target="_blank" rel="noopener" aria-label="Open three-day public weather and sensor comparison at full size"><img src="plots/openmeteo_vs_sensor_3days.png" alt="Sensor and Open-Meteo radiation compared on 20 May, 1 June and 15 June 2020" loading="lazy"></a><figcaption><h4>Public weather vs on-site sensor</h4><p>Three-day location check. Radiation is compared in W/m²; peak-time discrepancies remain unresolved.</p><a href="plots/openmeteo_vs_sensor_3days.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/actual_vs_predicted.png" target="_blank" rel="noopener" aria-label="Open actual versus predicted power at full size"><img src="plots/actual_vs_predicted.png" alt="Actual aggregate AC power and normal-equation predictions for both feature sets during the held-out test week" loading="lazy"></a><figcaption><h4>Actual vs predicted power</h4><p>The untouched 11–17 June test week: actual output, on-site model A and public-weather model B.</p><a href="plots/actual_vs_predicted.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/batch_learning_rates.png" target="_blank" rel="noopener" aria-label="Open batch gradient descent learning-rate plot at full size"><img src="plots/batch_learning_rates.png" alt="Set A batch gradient descent cost curves for three learning rates over 500 iterations" loading="lazy"></a><figcaption><h4>Batch GD learning rates</h4><p>Training-only half-sum squared error over 500 iterations. The excessive learning rate diverges.</p><a href="plots/batch_learning_rates.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/sgd_learning_rates.png" target="_blank" rel="noopener" aria-label="Open stochastic gradient descent learning-rate plot at full size"><img src="plots/sgd_learning_rates.png" alt="Set A ordered SGD full training cost after each epoch for three learning rates over 50 epochs" loading="lazy"></a><figcaption><h4>SGD learning rates</h4><p>Full training cost measured after each of 50 epochs. Individual within-epoch updates are not plotted.</p><a href="plots/sgd_learning_rates.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/residuals_vs_hour.png" target="_blank" rel="noopener" aria-label="Open residuals by hour at full size"><img src="plots/residuals_vs_hour.png" alt="Actual minus clipped Set A normal-equation predictions by hour, with hourly mean residuals" loading="lazy"></a><figcaption><h4>Residuals by hour</h4><p>Positive residuals mean underprediction. Each hourly mean uses seven test observations.</p><a href="plots/residuals_vs_hour.png" download>Download PNG ↓</a></figcaption></figure>
+        </div>
+        <h3 class="gallery-heading">Exploring the data <span>04 FIGURES</span></h3>
+        <div class="plot-grid">
+          <figure class="plot-card"><a href="plots/plot1_ac_vs_irradiation.png" target="_blank" rel="noopener" aria-label="Open AC power versus irradiation at full size"><img src="plots/plot1_ac_vs_irradiation.png" alt="Hourly AC power against on-site irradiation" loading="lazy"></a><figcaption><h4>AC power vs irradiation</h4><p>The strong association between measured sunlight and aggregate plant power.</p><a href="plots/plot1_ac_vs_irradiation.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/plot2_moduletemp_vs_ambienttemp.png" target="_blank" rel="noopener" aria-label="Open module and ambient temperature plot at full size"><img src="plots/plot2_moduletemp_vs_ambienttemp.png" alt="Module temperature versus ambient temperature, coloured by irradiation" loading="lazy"></a><figcaption><h4>Module vs ambient temperature</h4><p>Colour indicates irradiation, showing how sunlight relates to module heating.</p><a href="plots/plot2_moduletemp_vs_ambienttemp.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/plot3_ac_vs_dc.png" target="_blank" rel="noopener" aria-label="Open AC versus DC power at full size"><img src="plots/plot3_ac_vs_dc.png" alt="Hourly aggregate AC power against DC power using the unmodified source scales" loading="lazy"></a><figcaption><h4>AC vs DC power</h4><p>The unusual raw scale is preserved; the ratio is not presented as verified inverter efficiency.</p><a href="plots/plot3_ac_vs_dc.png" download>Download PNG ↓</a></figcaption></figure>
+          <figure class="plot-card"><a href="plots/plot4_avg_power_by_hour.png" target="_blank" rel="noopener" aria-label="Open average AC power by hour at full size"><img src="plots/plot4_avg_power_by_hour.png" alt="Mean measured AC power at each local hour across the 34-day dataset" loading="lazy"></a><figcaption><h4>Average AC power by hour</h4><p>The observed daily profile across 34 days, not a seasonal or annual production estimate.</p><a href="plots/plot4_avg_power_by_hour.png" download>Download PNG ↓</a></figcaption></figure>
+        </div>
+      </section>
+      <noscript><div class="research-note">Enable JavaScript to use the saved-model predictor. No external service is required.</div></noscript>
+    </main>
+    <footer><span>SOLAR / LAB <span class="footer-divider">/</span> AML ASSIGNMENT 1</span><span>Plant 1 · Historical study · May–June 2020</span></footer>
+  </div>
+</body>
+</html>

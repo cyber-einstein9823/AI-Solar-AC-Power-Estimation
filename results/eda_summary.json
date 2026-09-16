@@ -1,0 +1,11 @@
+{
+  "hourly_rows": 816,
+  "complete_eda_rows": 796,
+  "ac_irradiation_correlation": 0.9976028250471536,
+  "ambient_module_correlation": 0.8573471532482381,
+  "daylight_median_module_minus_ambient_c": 11.300708016666668,
+  "ac_dc_correlation": 0.999997844645171,
+  "median_ac_dc_ratio_positive_dc": 0.09781629119284402,
+  "mean_profile_peak_hour": 11,
+  "mean_profile_peak_kw": 21028.323064846078
+}

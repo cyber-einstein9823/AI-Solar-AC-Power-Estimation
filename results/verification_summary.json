@@ -1,0 +1,29 @@
+{
+  "automated_tests_passed": 31,
+  "full_offline_rebuild": "passed",
+  "python_syntax_compile": "passed",
+  "real_browser": "Microsoft Edge headless via Playwright",
+  "typed_input_changes_prediction": true,
+  "slider_and_number_sync": "all four inputs, both directions, covered by AppTest",
+  "presets": "all three covered by AppTest; night/sunny also browser checked",
+  "mobile_horizontal_overflow": false,
+  "train_rows": 628,
+  "test_rows": 168,
+  "missing_hours_retained_in_hourly_csv": 20,
+  "batch_round2_agreement": {
+    "A": true,
+    "B": true
+  },
+  "unresolved": [
+    "Public-weather site and interval alignment",
+    "Native Word page-render review unavailable; editable content/figures/tables structurally checked",
+    "Real published links, partner tag and genuine member contributions are user actions"
+  ],
+  "default_frontend": "Custom HTML CSS and JavaScript",
+  "html_browser_checks": "passed; see html_browser_verification.json",
+  "offline_html": "passed",
+  "ambient_animation": "sun/clouds/dawn/sunset/moon/stars; time and cloud cover; pause and reduced motion",
+  "plot_gallery": "nine original figures; full-size links and downloads; online and offline verified",
+  "default_launcher": "Run_App.cmd opens offline HTML without Python",
+  "submission": "Slim copy excludes installed environments and caches; original environment retained"
+}

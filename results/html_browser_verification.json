@@ -1,0 +1,41 @@
+{
+  "frontend": "HTML CSS vanilla JavaScript",
+  "browser": "Microsoft Edge headless via Playwright",
+  "url": "http://localhost:8503/",
+  "scenarios": [
+    {
+      "preset": "sunny",
+      "phase": "day",
+      "weather": "clear",
+      "power": "23,167.7"
+    },
+    {
+      "preset": "cloudy",
+      "phase": "day",
+      "weather": "cloudy",
+      "power": "12,684.8"
+    },
+    {
+      "preset": "sunset",
+      "phase": "dusk",
+      "weather": "partly",
+      "power": "3,170.2"
+    },
+    {
+      "preset": "night",
+      "phase": "night",
+      "weather": "clear",
+      "power": "0.0"
+    }
+  ],
+  "typed_inputs_and_sliders": "four fields, both directions passed",
+  "model_parity_tolerance_kw": 0.051,
+  "invalid_input": "prediction disabled",
+  "motion_pause": "passed",
+  "reduced_motion": "passed",
+  "direct_file_offline": "passed",
+  "scenario_download": "passed",
+  "evidence_rows": 6,
+  "mobile_horizontal_overflow": false,
+  "page_errors": []
+}

@@ -1,0 +1,17 @@
+{
+  "mode": "supplied_cached_csv",
+  "original_cached_response_available": false,
+  "warning": "Original API JSON, retrieval time and returned grid-cell metadata were not supplied. The requested settings below document reproducibility intent, not independently verified cached-response metadata.",
+  "endpoint": "https://archive-api.open-meteo.com/v1/archive",
+  "requested_settings": {
+    "latitude": 14.82,
+    "longitude": 78.28,
+    "start_date": "2020-05-15",
+    "end_date": "2020-06-17",
+    "hourly": "shortwave_radiation,temperature_2m,cloud_cover",
+    "timezone": "Asia/Kolkata"
+  },
+  "csv_sha256": "cce31aab79460d3f9d0f475bc4c304da60f8de0b52e757b00bc27dc260957896",
+  "validated_rows": 816,
+  "documentation": "https://open-meteo.com/en/docs/historical-weather-api"
+}

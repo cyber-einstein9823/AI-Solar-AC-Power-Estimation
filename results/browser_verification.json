@@ -1,0 +1,14 @@
+{
+  "url": "http://localhost:8502",
+  "browser": "Microsoft Edge headless via Playwright",
+  "initial_prediction": "23,167.7 kW",
+  "typed_hour_prediction": "22,504.3 kW",
+  "number_inputs": 4,
+  "sliders": 4,
+  "presets": "night and sunny checked in browser; all presets covered by AppTest",
+  "mobile_horizontal_overflow": false,
+  "page_errors": [],
+  "streamlit_exceptions": 0,
+  "desktop_screenshot": "app_screenshot.png",
+  "mobile_screenshot": "app_mobile_screenshot.png"
+}

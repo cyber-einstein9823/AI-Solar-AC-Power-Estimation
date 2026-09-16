@@ -1,0 +1,7 @@
+solver,alpha,budget,initial_cost,final_cost,stable,selected,assessment
+batch_gd,1e-05,500,38164354064.75091,588777442.3088539,True,False,"stable, slower at this budget"
+batch_gd,0.0001,500,38164354064.75091,121943628.6826955,True,True,selected: lowest final training cost
+batch_gd,0.001,500,38164354064.75091,2.932634080492221e+101,False,False,diverged
+sgd,0.0001,50,38164354064.75091,590814652.6872396,True,False,"stable, slower at this budget"
+sgd,0.001,50,38164354064.75091,122144480.25513104,True,False,"stable, slower at this budget"
+sgd,0.01,50,38164354064.75091,95970051.92884338,True,True,selected: lowest final training cost

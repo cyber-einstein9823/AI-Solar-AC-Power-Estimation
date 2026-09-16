@@ -1,0 +1,44 @@
+{
+  "raw_rows": {
+    "generation": 68778,
+    "sensor": 3182
+  },
+  "raw_timestamp_examples": {
+    "generation": "15-05-2020 00:00",
+    "sensor": "2020-05-15 00:00:00"
+  },
+  "timestamp_formats": {
+    "generation": "%d-%m-%Y %H:%M",
+    "sensor": "%Y-%m-%d %H:%M:%S"
+  },
+  "parsed_ranges": {
+    "generation": [
+      "2020-05-15 00:00:00",
+      "2020-06-17 23:45:00"
+    ],
+    "sensor": [
+      "2020-05-15 00:00:00",
+      "2020-06-17 23:45:00"
+    ]
+  },
+  "raw_missing_cells": {
+    "generation": 0,
+    "sensor": 0
+  },
+  "generation_timestamps": 3158,
+  "sensor_timestamps": 3182,
+  "generation_only_timestamps": 1,
+  "sensor_only_timestamps": 25,
+  "matched_quarter_hours": 3157,
+  "expected_inverters": 22,
+  "timestamps_with_incomplete_inverter_coverage": 101,
+  "hourly_rows": 816,
+  "hourly_rows_with_missing_values": 20,
+  "hourly_missing_cells": 100,
+  "complete_hourly_rows": 796,
+  "hours_with_1_to_3_matched_quarters": 14,
+  "aggregation": "Sum observed inverter AC/DC per timestamp; inner-align sensor and generation quarter-hours; left-labelled hourly mean; reindex full calendar.",
+  "missing_policy": "Preserve missing hourly values in CSV. Training drops incomplete model rows. No imputation, backfill or test-derived correction.",
+  "coverage_caution": "Summed values can understate full-plant power when inverter records are absent. Partial hours/inverter coverage are retained and reported, not corrected by invented values.",
+  "timezone_assumption": "Raw plant timestamps are naive; interpreted as local Asia/Kolkata by the assignment. Original timestamp timezone metadata is not provided."
+}

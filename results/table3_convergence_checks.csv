@@ -1,0 +1,3 @@
+Set,Batch iterations,Batch max coefficient difference,Rounded coefficients agree,SGD epochs,SGD max coefficient difference
+A,57846,9.99888712271968e-06,True,1000,122.16756146609686
+B,2742,9.98906671156874e-06,True,1000,651.3125102302103

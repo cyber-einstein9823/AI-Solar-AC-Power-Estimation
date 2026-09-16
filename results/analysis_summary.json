@@ -1,0 +1,12 @@
+{
+  "daytime_gap_kw": 2705.0420170693287,
+  "gap_percent_training_peak": 9.899187765705609,
+  "a_daytime_percent_training_peak": 2.5779968998769855,
+  "b_daytime_percent_training_peak": 12.477184665582593,
+  "largest_standardized_feature": "irradiation",
+  "largest_standardized_coefficient_kw": 8345.043876833455,
+  "max_mean_residual_hour": 10,
+  "max_mean_residual_kw": 1131.6714854794152,
+  "min_mean_residual_hour": 18,
+  "min_mean_residual_kw": -404.9425972327307
+}

@@ -1,0 +1,44 @@
+{
+  "status": "unresolved_provisional",
+  "modelling_timestamp_shift_hours": 0,
+  "reason": "One- and multiple-hour peak mismatches remain; exact site coordinates and raw sensor interval convention are not known. No test-guided shift is applied.",
+  "timezone": "Asia/Kolkata",
+  "timezone_utc_offset_seconds": 19800,
+  "timezone_verification": "Requested API timezone is explicit; original cached response metadata is unavailable unless refreshed. Plant timezone remains an assignment assumption.",
+  "sensor_hourly_bin": "Left-labelled mean of matched observations at h:00, h:15, h:30, h:45 when present.",
+  "public_radiation_convention": "Documentation describes a mean over the preceding hour; temperature and cloud cover are instantaneous quantities.",
+  "train_only_lag_investigation": {
+    "cutoff_exclusive": "2020-06-11",
+    "unshifted_daytime_correlation": 0.8874865332304264,
+    "highest_correlation_timestamp_shift_hours": 0,
+    "highest_daytime_correlation": 0.8874865332304264,
+    "interpretation": "Diagnostic evidence only: a correlation maximum does not establish the correct site or interval convention."
+  },
+  "peaks": [
+    {
+      "date": "2020-05-20",
+      "sensor_peak_hour": 12,
+      "public_peak_hour": 12,
+      "public_minus_sensor_hours": 0,
+      "sensor_peak_w_m2": 969.0397647261904,
+      "public_peak_w_m2": 915.0
+    },
+    {
+      "date": "2020-06-01",
+      "sensor_peak_hour": 10,
+      "public_peak_hour": 11,
+      "public_minus_sensor_hours": 1,
+      "sensor_peak_w_m2": 790.5447196666668,
+      "public_peak_w_m2": 845.0
+    },
+    {
+      "date": "2020-06-15",
+      "sensor_peak_hour": 10,
+      "public_peak_hour": 13,
+      "public_minus_sensor_hours": 3,
+      "sensor_peak_w_m2": 761.7215733214285,
+      "public_peak_w_m2": 689.0
+    }
+  ],
+  "documentation": "https://open-meteo.com/en/docs/historical-weather-api"
+}

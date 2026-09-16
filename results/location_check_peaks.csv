@@ -1,0 +1,4 @@
+date,sensor_peak_hour,public_peak_hour,public_minus_sensor_hours,sensor_peak_w_m2,public_peak_w_m2
+2020-05-20,12,12,0,969.0397647261904,915.0
+2020-06-01,10,11,1,790.5447196666668,845.0
+2020-06-15,10,13,3,761.7215733214285,689.0
